@@ -22,10 +22,6 @@ const replaceParam = (url, param, newValue) => {
     urlObj.searchParams.set(param, newValue)
     return urlObj.toString();
 }
-const getTokenFromUrl = url => {
-    const urlObj = new URL(url);
-    return urlObj.searchParams.get('token')
-}
 const getParam = (url, param) => {
     const urlObj = new URL(url);
     return urlObj.searchParams.get(param)
@@ -41,15 +37,15 @@ const pLoaderAutoRefresh = refreshInterval => {
         this.destroy = () => loader.destroy();
         this.load = async (context, config, callbacks) => {
             let { type, url } = context;
-            // if playlist request, send original request and return
+            // if play-list request, send original request and return
             if(type === 'manifest') {
                 loader.load(context, config, callbacks);
                 return;
             }
-            // if type is 'level' (type of requesting chunk list)
+            // then type is 'level' (type when requesting chunk-list)
             const msRefreshElsapsed = Date.now() - lastRefreshTimestamp;
-            const isFirstRequest = lastRefreshTimestamp === 0;
-            if(msRefreshElsapsed > refreshInterval || isFirstRequest){
+            const IS_FIRST_REQUEST = lastRefreshTimestamp === 0;
+            if(msRefreshElsapsed > refreshInterval || IS_FIRST_REQUEST){
                 // if time elapsed given refresh interval, request new token and replace it with old token.
                 try {
                     const newToken = await getNewToken();
@@ -69,7 +65,7 @@ const pLoaderAutoRefresh = refreshInterval => {
     }
 }
 
-// main()
+// main
 const video = document.getElementById('video');
 const message = document.getElementById('message');
 const container = document.getElementById('container');
@@ -108,6 +104,7 @@ const main = () => {
 
         getPlaylistUrl()
         .then(url => hls.loadSource(url))
+
     } catch(err) {
         console.error(err)
     }
