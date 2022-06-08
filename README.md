@@ -10,7 +10,7 @@ This project shows an example of an uninterrupted token renewal in the hls.js en
 - Automatically updated at every 20 seconds token   
 <image src="./image/capture.jpg" />
 
-- The most important part of the code is below (Overriding pLoader of hls.js)
+- The most important part of the code is below (Overriding pLoader(playlist loader) of hls.js)
 ```js
 const pLoaderAutoRefresh = refreshInterval => {
     // let lastRefreshTimestamp = Date.now();
